@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import CollectionItem from "../../components/collection-item/collection-item.component";
+import Header from "../../components/header/header.component.jsx";
 import { PRODUCTS } from "../../graphql/queries";
 
 const ShopPage = () => {
@@ -19,15 +20,18 @@ const ShopPage = () => {
   }, [data]);
 
   return (
-    <div className="shop-page">
-      <div className="collection-preview">
-        {collections.length
-          ? collections.map((item, index) => (
-              <CollectionItem key={index} item={item} />
-            ))
-          : null}
+    <>
+      <Header />
+      <div className="shop-page">
+        <div className="collection-preview">
+          {collections.length
+            ? collections.map((item, index) => (
+                <CollectionItem key={index} item={item} />
+              ))
+            : null}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

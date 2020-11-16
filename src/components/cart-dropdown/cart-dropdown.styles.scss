@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 240px;
+  max-width: 550px;
   height: 340px;
   display: flex;
   flex-direction: column;
@@ -21,4 +21,15 @@
   button {
     margin-top: auto;
   }
+}
+
+.currency-select-row {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.currency-select {
+  padding: 8px 13px 5px 10px;
+  background-position: 100% 60%;
 }

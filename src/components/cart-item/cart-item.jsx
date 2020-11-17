@@ -1,33 +1,53 @@
 import React from "react";
-
+import { setCart } from "../../redux/cart/cart.action";
+import { connect } from "react-redux";
 import "./cart-item.styles.scss";
 
-const CartItem = ({ item: { name, price, image_url, quantity }, currency }) => {
+const CartItem = ({
+  item: { id, title, price, image_url, quantity },
+  currency,
+  setCart,
+  carts,
+}) => {
+  const changeProductQuantity = (type) => {
+    let result = [];
+    carts.forEach((cart) => {
+      if (cart.id === id) {
+        result.push({
+          ...cart,
+          quantity: type === "increment" ? quantity + 1 : quantity - 1,
+        });
+      } else {
+        result.push(cart);
+      }
+    });
+    setCart(result);
+  };
   return (
     <div className="cart-item">
       <div className="product-description">
         <span className="remove-product" style={{ cursor: "pointer" }}>
           x
         </span>
-        <h6>Classic Maintenance Set</h6>
-        <div>
-          <span className="ff-bau-medium">MADE FOR:</span> here
-        </div>
-        <div>Dry | 25-34</div>
-        <div className="">
-          <span className="d-block">
-            Two Month <span>supply shipped every two months</span>.
-          </span>
-          <span>Cancel or change frequency anytime</span>
-        </div>
+        <h6>{title}</h6>
         <div className="quantity">
           <div className="quantity-selector">
-            <span className="counter-action decrement">-</span>
+            <span
+              className="counter-action decrement"
+              onClick={() => changeProductQuantity("decrement")}
+            >
+              -
+            </span>
             <span className="counter-number counter"> {quantity} </span>
-            <span className="counter-action increment">+</span>
+            <span
+              className="counter-action increment"
+              onClick={() => changeProductQuantity("increment")}
+            >
+              +
+            </span>
           </div>
           <div className="price">
-            {currency} &nbsp;{price}
+            {currency} &nbsp;{price * quantity}
           </div>
         </div>
       </div>
@@ -35,5 +55,12 @@ const CartItem = ({ item: { name, price, image_url, quantity }, currency }) => {
     </div>
   );
 };
+const mapStateToProps = (state) => ({
+  carts: state.cart.carts,
+  currency: state.cart.currency,
+});
 
-export default CartItem;
+const mapDispatchToProps = (dispatch) => ({
+  setCart: (cart) => dispatch(setCart(cart)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

@@ -11,3 +11,13 @@ export const setCart = (cart) => {
     payload: cart,
   };
 };
+
+export const changeCurrency = (currency) => ({
+  type: "CHANGE_CURRENCY",
+  payload: currency,
+});
+
+export const setProducts = (products) => ({
+  type: "SET_PRODUCTS",
+  payload: products,
+});

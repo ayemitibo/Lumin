@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { setCart, setCartState } from "../../redux/cart/cart.action";
 import "./collection-item.styles.scss";
 
-const CollectionItem = ({ item, setCart, setCartState, hidden }) => {
-  const { title, price, image_url } = item;
+const CollectionItem = ({ item, setCart, setCartState, hidden, currency }) => {
+  const { title, price, image_url, } = item;
 
   const addToCart = () => {
     if (hidden === true) {
@@ -21,7 +21,9 @@ const CollectionItem = ({ item, setCart, setCartState, hidden }) => {
         <img src={image_url} alt="" />
         <div className="collection-footer">
           <h2 className="name">{title}</h2>
-          <p className="price">From : {price}</p>
+          <p className="price">
+            From : {currency} {price}
+          </p>
         </div>
         <CustomButton onClick={addToCart}> ADD TO CART</CustomButton>
       </div>

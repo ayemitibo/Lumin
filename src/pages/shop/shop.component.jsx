@@ -1,23 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
+import { connect } from "react-redux";
 import CollectionItem from "../../components/collection-item/collection-item.component";
 import Header from "../../components/header/header.component.jsx";
 import { PRODUCTS } from "../../graphql/queries";
+import { setCart } from "../../redux/cart/cart.action";
 
-const ShopPage = () => {
+const ShopPage = ({ currency, setCart, carts }) => {
   const [collections, setCollections] = useState([]);
-  const { data, loading } = useQuery(PRODUCTS, {
+  const { data, loading, refetch } = useQuery(PRODUCTS, {
     variables: {
-      Currency: "NGN",
+      Currency: currency,
     },
   });
 
   useEffect(() => {
-    console.log(data, "data");
+    refetch();
     if (data && data.products) {
       setCollections(data.products);
+      var result = [];
+      if (carts.length) {
+        data.products.filter(function (product) {
+          return carts.forEach(function (cart) {
+            if (product.id === cart.id) {
+              result.push({
+                ...cart,
+                price: product.price,
+              });
+            }
+          });
+        });
+        setCart(result);
+      }
     }
-  }, [data]);
+  }, [currency, data]);
 
   return (
     <>
@@ -35,4 +51,13 @@ const ShopPage = () => {
   );
 };
 
-export default ShopPage;
+const mapStateToProps = (state) => ({
+  currency: state.cart.currency,
+  carts: state.cart.carts,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setCart: (products) => dispatch(setCart(products)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShopPage);

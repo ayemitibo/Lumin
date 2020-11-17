@@ -4,6 +4,8 @@ import { addItemToCart } from "./cart.utils";
 const INITIAL_STATE = {
   hidden: true,
   carts: [],
+  products: [],
+  currency: "NGN",
 };
 
 const cartReducer = (state = INITIAL_STATE, action) => {
@@ -17,6 +19,16 @@ const cartReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         carts: addItemToCart(state.carts, action.payload),
+      };
+    case "CHANGE_CURRENCY":
+      return {
+        ...state,
+        currency: action.payload,
+      };
+    case "SET_PRODUCTS":
+      return {
+        ...state,
+        products: action.payload,
       };
     default:
       return state;

@@ -6,7 +6,7 @@ import { setCart, setCartState } from "../../redux/cart/cart.action";
 import "./collection-item.styles.scss";
 
 const CollectionItem = ({ item, setCart, setCartState, hidden, currency }) => {
-  const { title, price, image_url, } = item;
+  const { title, price, image_url } = item;
 
   const addToCart = () => {
     if (hidden === true) {

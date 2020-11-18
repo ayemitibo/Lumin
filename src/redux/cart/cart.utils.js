@@ -1,5 +1,5 @@
 export const addItemToCart = (cartItems, cartItemToAdd) => {
-  if (cartItemToAdd && cartItemToAdd.length) {
+  if (cartItemToAdd && Array.isArray(cartItemToAdd)) {
     return cartItemToAdd;
   }
   const existingCartItem = cartItems.find(

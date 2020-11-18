@@ -7,7 +7,7 @@ import { PRODUCTS } from "../../graphql/queries";
 import { setCart } from "../../redux/cart/cart.action";
 
 const ShopPage = ({ currency, setCart, carts }) => {
-  const [collections, setCollections] = useState([]);
+  const [products, setProducts] = useState([]);
   const { data, loading, refetch } = useQuery(PRODUCTS, {
     variables: {
       Currency: currency,
@@ -17,7 +17,7 @@ const ShopPage = ({ currency, setCart, carts }) => {
   useEffect(() => {
     refetch();
     if (data && data.products) {
-      setCollections(data.products);
+      setProducts(data.products);
       var result = [];
       if (carts.length) {
         data.products.filter(function (product) {
@@ -40,9 +40,9 @@ const ShopPage = ({ currency, setCart, carts }) => {
       <Header />
       <div className="shop-page">
         <div className="collection-preview">
-          {collections.length
-            ? collections.map((item, index) => (
-                <CollectionItem key={index} item={item} />
+          {products.length
+            ? products.map((item, index) => (
+                <CollectionItem key={index} item={item} currency={currency} />
               ))
             : null}
         </div>

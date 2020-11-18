@@ -11,6 +11,12 @@ const CartItem = ({
 }) => {
   const changeProductQuantity = (type) => {
     let result = [];
+    if (type !== "increment") {
+      if (quantity == 1) {
+        removeItem();
+        return;
+      }
+    }
     carts.forEach((cart) => {
       if (cart.id === id) {
         result.push({
@@ -23,13 +29,25 @@ const CartItem = ({
     });
     setCart(result);
   };
+
+  const removeItem = () => {
+    setCart([
+      ...carts.filter((cart) => {
+        return cart.id !== id;
+      }),
+    ]);
+  };
   return (
     <div className="cart-item">
       <div className="product-description">
-        <span className="remove-product" style={{ cursor: "pointer" }}>
+        <span
+          className="remove-product"
+          style={{ cursor: "pointer" }}
+          onClick={removeItem}
+        >
           x
         </span>
-        <h6>{title}</h6>
+        <h2>{title}</h2>
         <div className="quantity">
           <div className="quantity-selector">
             <span
@@ -47,7 +65,8 @@ const CartItem = ({
             </span>
           </div>
           <div className="price">
-            {currency} &nbsp;{price * quantity}
+            {price ? currency : null}
+            {(price * quantity).toFixed(2)}
           </div>
         </div>
       </div>

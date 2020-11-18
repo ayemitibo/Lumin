@@ -22,7 +22,7 @@ const CollectionItem = ({ item, setCart, setCartState, hidden, currency }) => {
         <div className="collection-footer">
           <h2 className="name">{title}</h2>
           <p className="price">
-            From : {currency} {price}
+            From : {currency} {Number(price).toFixed(2)}
           </p>
         </div>
         <CustomButton onClick={addToCart}> ADD TO CART</CustomButton>

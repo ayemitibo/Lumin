@@ -76,9 +76,11 @@ const CartDropdown = ({
           <span>Subtotal</span> :
           <span>
             {currencySelected}
-            {carts.reduce((acc, cart) => {
-              return acc + cart.price * cart.quantity;
-            }, 0)}
+            {carts
+              .reduce((acc, cart) => {
+                return acc + cart.price * cart.quantity;
+              }, 0)
+              .toFixed(2)}
           </span>
         </div>
         <CustomButton style={{ width: "100%" }}>

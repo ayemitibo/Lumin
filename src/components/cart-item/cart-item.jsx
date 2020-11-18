@@ -66,7 +66,7 @@ const CartItem = ({
           </div>
           <div className="price">
             {price ? currency : null}
-            {(price * quantity).toFixed(2)}
+            {Number(price * quantity).toFixed(2)}
           </div>
         </div>
       </div>

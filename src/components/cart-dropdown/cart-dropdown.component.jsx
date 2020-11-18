@@ -16,7 +16,7 @@ const CartDropdown = ({
 }) => {
   const [currencies, setCurrency] = useState([]);
   const { data, loading } = useQuery(CURRENCY);
-  const [currencySelected, setCurrencySelected] = useState("NGN");
+  const [currencySelected, setCurrencySelected] = useState(currency);
   useEffect(() => {
     document.body.style.overflow = "hidden";
     if (data && data.currency) {
